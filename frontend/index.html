@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAIBOT - AI Guessing Game</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#info">Info</a>
+        <a href="#game">Game</a>
+    </div>
+</nav>
+
+<section id="home" class="hero">
+    <h1>Welcome to NAIBOT</h1>
+    <p>AI-powered guessing game inspired by the famous Akinator. Think of something, and let NAIBOT guess it! <br> my links:</p>
+    <div class="buttons">
+        <a href="https://github.com/Cowspump" class="button">GitHub</a>
+        <a href="https://t.me/cowspump" class="button">Telegram</a>
+        <a href="https://www.linkedin.com/in/alikhan-moldabayev-62076a347/" class="button">LinkedIn</a>
+    </div>
+</section>
+
+<section id="info" class="section">
+    <div class="card">
+        <h2>About the Project</h2>
+        <p>Клон акинатора на базе open ai gpt4-o, этот проект сделан для n!. Я студент КБТУ и это тестовое задание выпало мне во втором этапе отбора, технологии которые я использовал: python - fastapi, open_ai api, html - css - js. В планах было использование апи акинатора , но к сожалению они не работают, проект был сделан меньше чем за 4 дня. </p>
+    </div>
+</section>
+
+<section id="game" class="section game-section">
+    <div class="game-content">
+        <div class="question-area">
+            <button id="start-btn" class="start-button">Старт</button>
+
+            <div id="qa-block" class="hidden">
+                <h2 id="question">Вопрос появится здесь</h2>
+
+                <div class="question-buttons">
+                    <button class="answer-btn">Да</button>
+                    <button class="answer-btn">Нет</button>
+                    <button class="answer-btn">Возможно</button>
+                    <button class="answer-btn">Не знаю</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+const socket = new WebSocket('ws://localhost:8000/game');
+const startBtn = document.getElementById('start-btn');
+const qaBlock = document.getElementById('qa-block');
+const questionArea = document.getElementById('question');
+const answerButtons = document.querySelectorAll('.answer-btn');
+
+
+startBtn.addEventListener('click', () => {
+    startBtn.style.display = 'none';
+    qaBlock.classList.remove('hidden');
+});
+
+
+answerButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const userAnswer = button.textContent;
+
+        socket.send(userAnswer);
+    });
+});
+
+
+socket.onmessage = function(event) {
+    const message = event.data;
+
+    if (message.includes("Вопрос")) {
+        questionArea.textContent = message;
+    } else if (message.includes("предположение:")) {
+        questionArea.textContent = message;
+        document.querySelector('.question-buttons').style.display = 'none';
+
+        setTimeout(() => {
+            if (confirm("Хотите сыграть снова?")) {
+                window.location.reload();
+            }
+        }, 3000);
+    }
+};
+</script>
+
+</body>
+</html>
