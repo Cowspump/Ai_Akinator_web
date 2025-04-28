@@ -7,13 +7,13 @@ NAIBOT — это веб-приложение, где искусственный
 
 
   1.  Клонируйте репозиторий: git clone https://github.com/Cowspump/Ai_Akinator_web.git
-  2.  Перейди в папку проекта: cd Ai_Akinator_web
+  2.  Перейди в папку проекта: cd Ai_Akinator_web, cd ./backend
   3.  Установи зависимости: pip install -r requirements.txt
 
   4.  чтобы запустить проект зайдите в папку cd ./backend
 
   5.  в папке ./utils в файле config.py вам нужно вставить токен от gpt.
-  6.  в терминале напишите fastapi dev main.py
+  6.  в терминале напишите uvicorn main:app --reload
   7.  откройте index.html которая в папке frontend
   8.  Готово!
  
