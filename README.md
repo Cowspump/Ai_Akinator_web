@@ -11,7 +11,9 @@ NAIBOT — это веб-приложение, где искусственный
   3.  Установи зависимости: pip install -r requirements.txt
 
   4.  чтобы запустить проект зайдите в папку cd ./backend
-  5.  в терминале напишите fastapi dev main.py
-  6.  откройте index.html которая в папке frontend
-  7.  Готово!
+
+  5.  в папке ./utils в файле config.py вам нужно вставить токен от gpt.
+  6.  в терминале напишите fastapi dev main.py
+  7.  откройте index.html которая в папке frontend
+  8.  Готово!
  
